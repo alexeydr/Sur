@@ -3,8 +3,12 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
+#include "UObject/ScriptInterface.h"
 #include "InteractionComponent.generated.h"
 
+class ASurCharacter;
+class IInteractionInterface;
+class UParticleSystemComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUR_API UInteractionComponent : public UActorComponent
@@ -16,6 +20,22 @@ public:
 	UInteractionComponent();
 
 protected:
+
+	UPROPERTY(Transient)
+		TScriptInterface<IInteractionInterface> LastActiveActor;
+
+	UPROPERTY(Transient)
+		float CosInteractionAngle;
+
+	UPROPERTY(EditDefaultsOnly)
+		float InteractionAngle;
+
+	UPROPERTY(EditDefaultsOnly)
+		float InteractionDistance;
+
+	UPROPERTY(Transient)
+		ASurCharacter* OwnerCharacter;
+
 	// Called when the game starts
 	virtual void BeginPlay() override;
 

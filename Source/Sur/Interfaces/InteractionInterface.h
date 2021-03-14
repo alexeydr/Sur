@@ -2,16 +2,33 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "UObject/Interface.h"
 #include "InteractionInterface.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class SUR_API UInteractionInterface : public UObject
+UINTERFACE(MinimalAPI, BlueprintType)
+class UInteractionInterface : public UInterface
 {
 	GENERATED_BODY()
 	
+};
+
+class IInteractionInterface
+{
+	GENERATED_BODY()
+
+public:
+
+	virtual AActor* GetOwningActor() { return nullptr; }
+
+	virtual void OnBecameActive() {}
+
+	virtual void OnStoppedActive() {}
+
+	virtual void OnInteraction() {}
+
+	virtual void OnStopInteraction() {}
+
 };

@@ -6,6 +6,11 @@
 #include "GameFramework/Character.h"
 #include "SurCharacter.generated.h"
 
+class UInteractionComponent;
+class USpringArmComponent;
+class UCameraComponent;
+class UInventoryComponent;
+
 UCLASS(config=Game)
 class ASurCharacter : public ACharacter
 {
@@ -13,11 +18,17 @@ class ASurCharacter : public ACharacter
 
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
+	    USpringArmComponent* CameraBoom;
 
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* FollowCamera;
+	    UCameraComponent* FollowCamera;
+
+	UPROPERTY(VisibleAnywhere)
+		UInteractionComponent* InteractionComp;
+
+	UPROPERTY(VisibleAnywhere)
+		UInventoryComponent* InventoryComp;
 public:
 	ASurCharacter();
 
@@ -65,8 +76,8 @@ protected:
 
 public:
 	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
 
