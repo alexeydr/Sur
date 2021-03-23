@@ -7,6 +7,8 @@
 #include "Sur/Interfaces/InteractionInterface.h"
 #include "BaseInteractionActor.generated.h"
 
+class UWidgetComponent;
+
 UCLASS()
 class ABaseInteractionActor : public AActor, public IInteractionInterface
 {
@@ -20,9 +22,17 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+    UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	UWidgetComponent* WidgetComponent;
+
+public:
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	AActor* GetOwningActor() override { return this; }
+	virtual AActor* GetOwningActor() override { return this; }
+
+	virtual void OnBecameActive() override;
+
+	virtual void OnStoppedActive() override;
 };

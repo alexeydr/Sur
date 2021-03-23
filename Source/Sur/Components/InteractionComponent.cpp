@@ -37,7 +37,7 @@ void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (OwnerCharacter)
+	if (IsValid(OwnerCharacter))
 	{
 		IInteractionInterface* NearestActor = nullptr;
 		for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
@@ -61,8 +61,17 @@ void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 		}
         if (NearestActor && NearestActor->GetOwningActor())
         {
-			UE_LOG(LogTemp, Error, TEXT("Name: %s"), *NearestActor->GetOwningActor()->GetName());
+			NearestActor->OnBecameActive();
+            if (ActiveInteractActor && ActiveInteractActor != NearestActor)
+            {
+				ActiveInteractActor->OnStoppedActive();
+            }
         }
+        else if(ActiveInteractActor && !NearestActor)
+        {
+			ActiveInteractActor->OnStoppedActive();
+        }
+		ActiveInteractActor = NearestActor;
 	}
 
 	// ...

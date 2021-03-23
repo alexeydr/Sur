@@ -22,19 +22,21 @@ public:
 protected:
 
 	UPROPERTY(Transient)
-		TScriptInterface<IInteractionInterface> LastActiveActor;
+	TScriptInterface<IInteractionInterface> LastActiveActor;
 
 	UPROPERTY(Transient)
-		float CosInteractionAngle;
+	float CosInteractionAngle;
 
 	UPROPERTY(EditDefaultsOnly)
-		float InteractionAngle;
+	float InteractionAngle;
 
 	UPROPERTY(EditDefaultsOnly)
-		float InteractionDistance;
+	float InteractionDistance;
 
 	UPROPERTY(Transient)
-		ASurCharacter* OwnerCharacter;
+	ASurCharacter* OwnerCharacter;
+
+	IInteractionInterface* ActiveInteractActor;
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
