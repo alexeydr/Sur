@@ -4,6 +4,7 @@
 #include "Sur/Interaction Actors/BaseInteractionActor.h"
 #include "Components/WidgetComponent.h"
 #include "Blueprint/UserWidget.h"
+#include "Sur/UI/InteractionWidget.h"
 
 // Sets default values
 ABaseInteractionActor::ABaseInteractionActor()
@@ -18,6 +19,7 @@ void ABaseInteractionActor::BeginPlay()
 	Super::BeginPlay();
    
 	WidgetComponent = Cast<UWidgetComponent>(FindComponentByClass(UWidgetComponent::StaticClass()));
+	InteractWidget = Cast<UInteractionWidget>(WidgetComponent->GetUserWidgetObject());
     
 }
 
@@ -38,7 +40,7 @@ void ABaseInteractionActor::OnBecameActive()
 
 void ABaseInteractionActor::OnStoppedActive()
 {
-	if (WidgetComponent && WidgetComponent->GetUserWidgetObject())
+	if (WidgetComponent)
 	{
 		WidgetComponent->SetVisibility(false);
 	}

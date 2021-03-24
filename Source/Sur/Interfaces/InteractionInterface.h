@@ -21,6 +21,8 @@ class IInteractionInterface
 
 public:
 
+	virtual float GetInteractionTime() { return 0.f; }
+
 	virtual AActor* GetOwningActor() { return nullptr; }
 
 	virtual void OnBecameActive() {}

@@ -8,31 +8,43 @@
 #include "BaseInteractionActor.generated.h"
 
 class UWidgetComponent;
+class UInteractionWidget;
 
 UCLASS()
 class ABaseInteractionActor : public AActor, public IInteractionInterface
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
+public:
+
 	ABaseInteractionActor();
 
 protected:
-	// Called when the game starts or when spawned
+
 	virtual void BeginPlay() override;
 
     UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	UWidgetComponent* WidgetComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float InteractionTime;
+
+	UPROPERTY(Transient)
+	UInteractionWidget* InteractWidget;
+
 public:
 
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	//IInteractionInterface interface
+
+	virtual float GetInteractionTime() override { return InteractionTime; }
 
 	virtual AActor* GetOwningActor() override { return this; }
 
 	virtual void OnBecameActive() override;
 
 	virtual void OnStoppedActive() override;
+
+	//End of IInteractionInterface interface
 };

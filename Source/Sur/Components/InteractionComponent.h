@@ -19,6 +19,8 @@ public:
 	// Sets default values for this component's properties
 	UInteractionComponent();
 
+	IInteractionInterface* GetActiveInteractActor() { return ActiveInteractActor; }
+
 protected:
 
 	UPROPERTY(Transient)

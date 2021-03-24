@@ -19,7 +19,6 @@ UInteractionComponent::UInteractionComponent()
 	// ...
 }
 
-
 // Called when the game starts
 void UInteractionComponent::BeginPlay()
 {
