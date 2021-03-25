@@ -15,6 +15,10 @@ class UInteractionWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+
+	void SetTextOnWidget(FString InInteractionAction, FString InInteractionTimeText = "");
+
 protected:
 
 	UPROPERTY(meta = (BindWidget))

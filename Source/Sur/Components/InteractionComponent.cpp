@@ -41,7 +41,8 @@ void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 		IInteractionInterface* NearestActor = nullptr;
 		for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 		{
-			if (IInteractionInterface* UsableActor = Cast<IInteractionInterface>(*ActorItr))
+			IInteractionInterface* UsableActor = Cast<IInteractionInterface>(*ActorItr);
+			if (!ActorItr->IsHidden() && UsableActor)
 			{
 			    const float CosAngle = FMath::Abs(FVector::DotProduct(OwnerCharacter->GetFollowCamera()->GetForwardVector().GetSafeNormal(),
 					(OwnerCharacter->GetFollowCamera()->GetComponentLocation() - ActorItr->GetActorLocation()).GetSafeNormal()));

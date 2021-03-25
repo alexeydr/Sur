@@ -12,6 +12,8 @@ class USpringArmComponent;
 class UCameraComponent;
 class UInventoryComponent;
 
+class APickUpActor;
+
 UCLASS(config=Game)
 class ASurCharacter : public ACharacter
 {
@@ -30,6 +32,7 @@ class ASurCharacter : public ACharacter
 	UInventoryComponent* InventoryComp;
 
 public:
+
 	ASurCharacter();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -54,6 +57,8 @@ protected:
     UFUNCTION()
 	void OnInteractTimerCompleted(TScriptInterface<IInteractionInterface> InInteractActor);
 
+	void UseInventory();
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -64,5 +69,7 @@ public:
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	UInventoryComponent* GetInventoryComponent() const { return InventoryComp; }
 };
 

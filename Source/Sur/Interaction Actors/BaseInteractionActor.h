@@ -9,6 +9,7 @@
 
 class UWidgetComponent;
 class UInteractionWidget;
+class ASurCharacter;
 
 UCLASS()
 class ABaseInteractionActor : public AActor, public IInteractionInterface
@@ -19,11 +20,17 @@ public:
 
 	ABaseInteractionActor();
 
+    UPROPERTY(Transient)
+	ASurCharacter* SurChar;
+
 protected:
 
 	virtual void BeginPlay() override;
 
-    UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UStaticMeshComponent* MeshComponent;
+
+    UPROPERTY(EditDefaultsOnly,BlueprintReadOnly)
 	UWidgetComponent* WidgetComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

@@ -6,6 +6,8 @@
 #include "Components/InteractionComponent.h"
 #include "Components/InventoryComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Blueprint/UserWidget.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
@@ -13,7 +15,6 @@
 
 //////////////////////////////////////////////////////////////////////////
 // ASurCharacter
-
 ASurCharacter::ASurCharacter()
 {
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -52,6 +53,7 @@ void ASurCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 {
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Interaction", IE_Pressed, this, &ASurCharacter::Interaction);
+	PlayerInputComponent->BindAction("ChangeInventoryMode", IE_Pressed, this, &ASurCharacter::UseInventory);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
@@ -94,6 +96,11 @@ void ASurCharacter::OnInteractTimerCompleted(TScriptInterface<IInteractionInterf
     {
 		InInteractActor->OnStopInteraction();
     }
+}
+
+void ASurCharacter::UseInventory()
+{
+   	InventoryComp->OnCharUseInventory();
 }
 
 void ASurCharacter::MoveForward(float Value)

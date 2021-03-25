@@ -24,9 +24,6 @@ public:
 protected:
 
 	UPROPERTY(Transient)
-	TScriptInterface<IInteractionInterface> LastActiveActor;
-
-	UPROPERTY(Transient)
 	float CosInteractionAngle;
 
 	UPROPERTY(EditDefaultsOnly)

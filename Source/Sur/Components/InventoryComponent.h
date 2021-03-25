@@ -6,6 +6,9 @@
 #include "Components/ActorComponent.h"
 #include "InventoryComponent.generated.h"
 
+class APickUpActor;
+class UStorageWidget;
+class IUsableInterface;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUR_API UInventoryComponent : public UActorComponent
@@ -16,9 +19,35 @@ public:
 	// Sets default values for this component's properties
 	UInventoryComponent();
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UStorageWidget> InventoryWidgetClass;
+
+	void OnCharUseInventory();
+
+	void RemoveItemFromInventory(APickUpActor* Item);
+
+	void AddItem(APickUpActor* NewItem);
+
+	int GetMaxInventoryCapacity() const { return InventoryHorizontalCapacity * InventoryVerticalCapacity; }
+
+
 protected:
-	// Called when the game starts
+
 	virtual void BeginPlay() override;
+
+	UPROPERTY(Transient)
+	uint8 bIsOpenned : 1;
+
+	TArray<IUsableInterface*> Inventory;
+
+	UPROPERTY(Transient)
+	UStorageWidget* StorageWidgetRef;
+
+	UPROPERTY(EditAnywhere)
+	int InventoryHorizontalCapacity = 1;
+
+	UPROPERTY(EditAnywhere)
+	int InventoryVerticalCapacity = 1;
 
 public:	
 	// Called every frame
