@@ -19,8 +19,8 @@ void APickUpActor::HideInWorld()
 void APickUpActor::ShowInWorld()
 {
 	FVector Start = SurChar->GetActorLocation();
-	FVector ForwardVector = SurChar->GetActorForwardVector();
-	FVector End = ForwardVector * 15.f + Start;
+	FVector ForwardVector = SurChar->GetActorForwardVector().GetSafeNormal();
+	FVector End = ForwardVector * DistanceToDrop + Start;
 	TeleportTo(End,GetActorRotation());
 
 	this->SetActorHiddenInGame(false);

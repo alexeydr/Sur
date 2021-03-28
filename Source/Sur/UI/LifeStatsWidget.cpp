@@ -3,7 +3,12 @@
 #include "Sur/Components/LifeStatsComponent.h"
 #include "Components/VerticalBox.h"
 #include "Sur/UI/OneLifeStatWidget.h"
-#include "Sur/Library.h"
+
+void ULifeStatsWidget::UpdateWidget(EStat ValueType, float NewValue)
+{
+	auto Widget = *AllWidgets.Find(ValueType);
+	Widget->SetValueOnWidget(ValueType, NewValue);
+}
 
 void ULifeStatsWidget::CreateStatRow(EStat ValueType, float Value)
 {
@@ -13,6 +18,7 @@ void ULifeStatsWidget::CreateStatRow(EStat ValueType, float Value)
 		if (WidgetRef)
 		{
 			WidgetRef->SetValueOnWidget(ValueType, Value);
+			AllWidgets.Add(ValueType,WidgetRef);
 			ParamName->AddChildToVerticalBox(WidgetRef);
 		}
 	}

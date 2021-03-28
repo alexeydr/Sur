@@ -36,20 +36,13 @@ protected:
 	float Hunger = 50.f;
 
 public:
-
-	void AddStat(EStat StatType, float NewValue)
+	
+	void ChangeStat(EStat StatType, float NewValue)
 	{
 		float* Param = GetStat(StatType);
 		*Param += NewValue;
+		*Param = FMath::Clamp(*Param, 0.f, LIMIT);
 	};
-
-	bool CheckCorrectValue(EStat StatType, float NewValue)
-	{
-		if (*GetStat(StatType) + NewValue > LIMIT)
-			return true;
-
-		return false;
-	}
 
 	float* GetStat(EStat StatType) 
 	{
@@ -57,13 +50,10 @@ public:
 		{
 		case EStat::Health:
 			return &Health;
-			break;
 		case EStat::Hunger:
 			return &Hunger;
-			break; 
 		case EStat::Thrust:
 			return &Thrust;
-			break;
 		}
 		return nullptr;
 	};
@@ -83,6 +73,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 	UPROPERTY(Transient)
 	FLifeStats PlayerStat;
 	
@@ -94,6 +86,15 @@ protected:
 	
 	UPROPERTY(Transient)
 	ASurCharacter* MainChar;
+
+	void CheckValueOnMainStat();
+
+	void CheckValueOnAdditionalStat();
+
+	void Die();
+	
+	UFUNCTION()
+	void OnSubstractLifeStats();
 
 public:	
 	// Called every frame

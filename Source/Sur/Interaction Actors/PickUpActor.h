@@ -26,6 +26,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UBaseCellUserWidget> CellClass;
 
+	UPROPERTY(EditAnywhere)
+	float DistanceToDrop = 50.f;
+
 public:
 
 	void HideInWorld();

@@ -20,6 +20,9 @@ class SUR_API ULifeStatsWidget : public UUserWidget
 	
 protected:
 
+	UPROPERTY(Transient)
+	TMap<TEnumAsByte<EStat>, UOneLifeStatWidget*> AllWidgets;
+	
 	UPROPERTY(meta = (BindWidget))
 	UVerticalBox* ParamName;
 
@@ -28,6 +31,8 @@ protected:
 
 public:
 
+	void UpdateWidget(EStat ValueType, float NewValue);
+	
 	void CreateStatRow(EStat ValueType, float Value);
 
 };
