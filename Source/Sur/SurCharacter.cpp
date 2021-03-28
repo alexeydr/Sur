@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/InteractionComponent.h"
 #include "Components/InventoryComponent.h"
+#include "Components/LifeStatsComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Blueprint/UserWidget.h"
@@ -44,6 +45,7 @@ ASurCharacter::ASurCharacter()
 
 	InteractionComp = CreateDefaultSubobject<UInteractionComponent>(TEXT("Interaction"));
 	InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
+	LifeStatsComp = CreateDefaultSubobject<ULifeStatsComponent>(TEXT("LifeStats"));
 }
 
 //////////////////////////////////////////////////////////////////////////

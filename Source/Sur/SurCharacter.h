@@ -1,5 +1,4 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -11,6 +10,7 @@ class UInteractionComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UInventoryComponent;
+class ULifeStatsComponent;
 
 class APickUpActor;
 
@@ -18,7 +18,7 @@ UCLASS(config=Game)
 class ASurCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
 
@@ -30,6 +30,9 @@ class ASurCharacter : public ACharacter
 
 	UPROPERTY(VisibleAnywhere)
 	UInventoryComponent* InventoryComp;
+	
+	UPROPERTY(VisibleAnywhere)
+	ULifeStatsComponent* LifeStatsComp;
 
 public:
 
@@ -47,7 +50,6 @@ protected:
 
 	void MoveRight(float Value);
 
-	
 	void TurnAtRate(float Rate);
 
 	void LookUpAtRate(float Rate);
