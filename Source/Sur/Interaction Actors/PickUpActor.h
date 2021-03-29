@@ -8,6 +8,7 @@
 
 class UDataAssetForStorage;
 class UBaseCellUserWidget;
+class UUsableDataAsset;
 /**
  * 
  */
@@ -22,6 +23,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UDataAssetForStorage* StorageDataAsset;
+
+	UPROPERTY(EditAnywhere)
+	UUsableDataAsset* UsableDataAsset;	
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UBaseCellUserWidget> CellClass;

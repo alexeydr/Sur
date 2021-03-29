@@ -26,13 +26,13 @@ struct FLifeStats
 
 protected:
 
-	UPROPERTY(Transient)
+	UPROPERTY(EditAnywhere)
 	float Health = 90.f;
 
-	UPROPERTY(Transient)
+	UPROPERTY(EditAnywhere)
 	float Thrust = 100.f;
 
-	UPROPERTY(Transient)
+	UPROPERTY(EditAnywhere)
 	float Hunger = 50.f;
 
 public:
