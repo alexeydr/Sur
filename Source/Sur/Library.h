@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 
+class UCharacterInventoryComponent;
 /**
  * 
  */
@@ -12,4 +13,5 @@ public:
 
 	static FString EnumToString(const TCHAR* EnumPtr, int32 EnumValue);
 
+	static UCharacterInventoryComponent* GetCharacterInventory(UObject* WCO);
 };

@@ -9,9 +9,8 @@ class IInteractionInterface;
 class UInteractionComponent;
 class USpringArmComponent;
 class UCameraComponent;
-class UInventoryComponent;
+class UCharacterInventoryComponent;
 class ULifeStatsComponent;
-
 class APickUpActor;
 
 UCLASS(config=Game)
@@ -29,7 +28,7 @@ class ASurCharacter : public ACharacter
 	UInteractionComponent* InteractionComp;
 
 	UPROPERTY(VisibleAnywhere)
-	UInventoryComponent* InventoryComp;
+	UCharacterInventoryComponent* CharInventoryComp;
 	
 	UPROPERTY(VisibleAnywhere)
 	ULifeStatsComponent* LifeStatsComp;
@@ -72,6 +71,9 @@ public:
 
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
-	UInventoryComponent* GetInventoryComponent() const { return InventoryComp; }
+	FORCEINLINE UCharacterInventoryComponent* GetInventoryComponent() const { return CharInventoryComp; }
+
+	FORCEINLINE ULifeStatsComponent* GetLifeStatsComponent() const { return LifeStatsComp; }
+
 };
 

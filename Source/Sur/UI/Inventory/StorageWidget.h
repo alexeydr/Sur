@@ -6,11 +6,10 @@
 #include "StorageWidget.generated.h"
 
 class USizeBox;
-class UGridPanel;
 class UBaseCellUserWidget;
-class IUsableInterface;
 class UItemViewWindow;
-
+class UInventoryComponent;
+class IUsableInterface;
 /**
  * 
  */
@@ -25,19 +24,21 @@ protected:
 	TSubclassOf<UUserWidget> BaseCellClass;
 
 	UPROPERTY(meta = (BindWidget))
-	UGridPanel* StorageGrid;
+	USizeBox* AdditionalBox;
 
 	UPROPERTY(meta = (BindWidget))
-	USizeBox* ViewPanelBox;
+	USizeBox* MainBox;
 
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UItemViewWindow> ViewPanelWidgetClass;
+	UPROPERTY(Transient)
+	UInventoryComponent* OwnerComponent;
 
 public:
 
 	void OnItemSelected(IUsableInterface* InInterface);
 
-	void InitializeWidget(TArray<IUsableInterface*> InInventory, int HorizontalGrid, int VerticalGrid);
+	UPanelWidget* FormBoxWithCells(UInventoryComponent* SourceComponent);
 
+	void AddToAdditionalWindow(UWidget* Content);
 
+	void AddToMainWindow(UWidget* Content);
 };

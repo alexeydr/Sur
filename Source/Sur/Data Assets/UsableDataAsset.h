@@ -23,4 +23,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	FLifeStats NegativeEffect;
 
+	FLifeStats GetDeltaEffect() { return PositiveEffect + NegativeEffect; }
+
 };

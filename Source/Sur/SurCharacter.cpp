@@ -4,7 +4,7 @@
 #include "Interfaces/InteractionInterface.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InteractionComponent.h"
-#include "Components/InventoryComponent.h"
+#include "Components/CharacterInventoryComponent.h"
 #include "Components/LifeStatsComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -42,9 +42,8 @@ ASurCharacter::ASurCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
-
 	InteractionComp = CreateDefaultSubobject<UInteractionComponent>(TEXT("Interaction"));
-	InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
+	CharInventoryComp = CreateDefaultSubobject<UCharacterInventoryComponent>(TEXT("CharInventoryComp"));
 	LifeStatsComp = CreateDefaultSubobject<ULifeStatsComponent>(TEXT("LifeStats"));
 }
 
@@ -102,7 +101,7 @@ void ASurCharacter::OnInteractTimerCompleted(TScriptInterface<IInteractionInterf
 
 void ASurCharacter::UseInventory()
 {
-   	InventoryComp->OnCharUseInventory();
+   	CharInventoryComp->CreateWidgetInventory();
 }
 
 void ASurCharacter::MoveForward(float Value)

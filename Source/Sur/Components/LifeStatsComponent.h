@@ -35,12 +35,18 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float Hunger = 50.f;
 
+	void AddStat(float& Stat, float Val) 
+	{
+		Stat += Val;
+		Stat = FMath::Clamp(Stat, 0.f, LIMIT);
+	};
+
 public:
 	
-	void ChangeStat(EStat StatType, float NewValue)
+	void ChangeStat(EStat StatType, float DeltaValue)
 	{
 		float* Param = GetStat(StatType);
-		*Param += NewValue;
+		*Param += DeltaValue;
 		*Param = FMath::Clamp(*Param, 0.f, LIMIT);
 	};
 
@@ -56,6 +62,19 @@ public:
 			return &Thrust;
 		}
 		return nullptr;
+	};
+
+	FLifeStats& operator+ (FLifeStats& InLifeStat)
+	{
+		AddStat(Health, InLifeStat.Health);
+		AddStat(Thrust, InLifeStat.Thrust);
+		AddStat(Hunger, InLifeStat.Hunger);
+		return *this;
+	};
+
+	FLifeStats operator+= (FLifeStats& InLifeStat)
+	{
+		return *this + InLifeStat;
 	};
 
 };
@@ -96,7 +115,12 @@ protected:
 	UFUNCTION()
 	void OnSubstractLifeStats();
 
-public:	
+	void UpdateWidget();
+
+public:
+
+	void AddStats(FLifeStats DeltaStats);
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 		

@@ -4,11 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Sur/SurTypes.h"
 #include "InventoryComponent.generated.h"
 
 class APickUpActor;
 class UStorageWidget;
 class IUsableInterface;
+class UBaseCellUserWidget;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUR_API UInventoryComponent : public UActorComponent
@@ -19,17 +21,17 @@ public:
 	// Sets default values for this component's properties
 	UInventoryComponent();
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<UStorageWidget> InventoryWidgetClass;
+	virtual void CreateWidgetInventory();
 
-	void OnCharUseInventory();
+	virtual void OnSelectItem(IUsableInterface* SelectedItem) {};
 
-	void RemoveItemFromInventory(APickUpActor* Item);
+	virtual void RemoveItemFromInventory(APickUpActor* Item);
 
-	void AddItem(APickUpActor* NewItem);
+	virtual void AddItem(APickUpActor* NewItem);
 
-	int GetMaxInventoryCapacity() const { return InventoryHorizontalCapacity * InventoryVerticalCapacity; }
+	const TArray<IUsableInterface*>& GetInventory() { return Inventory; }
 
+	const FStorageSize& GetInventoryCapacity() { return InventoryCapacity; }
 
 protected:
 
@@ -44,14 +46,17 @@ protected:
 	UStorageWidget* StorageWidgetRef;
 
 	UPROPERTY(EditAnywhere)
-	int InventoryHorizontalCapacity = 1;
+	FStorageSize InventoryCapacity = 5;
 
 	UPROPERTY(EditAnywhere)
-	int InventoryVerticalCapacity = 1;
+	TSubclassOf<UStorageWidget> InventoryWidgetClass;
 
 public:	
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UBaseCellUserWidget> StorageCellClass;
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
+	
 };

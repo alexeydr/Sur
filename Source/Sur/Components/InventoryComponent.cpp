@@ -18,41 +18,37 @@ UInventoryComponent::UInventoryComponent()
 	// ...
 }
 
-void UInventoryComponent::OnCharUseInventory()
+void UInventoryComponent::CreateWidgetInventory()
 {   
-    if (!bIsOpenned)
-    {
-		 StorageWidgetRef = CreateWidget<UStorageWidget>(UGameplayStatics::GetGameInstance(GetWorld()), InventoryWidgetClass);
-		 bIsOpenned = true;
-		 StorageWidgetRef->InitializeWidget(Inventory, InventoryHorizontalCapacity, InventoryVerticalCapacity);
-		 StorageWidgetRef->AddToViewport();
-    }
-    else
-    {
+	if (!bIsOpenned)
+	{
+		StorageWidgetRef = CreateWidget<UStorageWidget>(UGameplayStatics::GetGameInstance(GetWorld()), InventoryWidgetClass);
+		if (StorageWidgetRef)
+		{
+			bIsOpenned = true;
+			StorageWidgetRef->AddToViewport();
+		}
+	}
+	else
+	{
 		bIsOpenned = false;
 		StorageWidgetRef->RemoveFromParent();
-    }
-        
+	}
 }
 
 void UInventoryComponent::RemoveItemFromInventory(APickUpActor* Item)
 {
 	Inventory.Remove(Item);
-
-    if (StorageWidgetRef)
-	    StorageWidgetRef->InitializeWidget(Inventory, InventoryHorizontalCapacity, InventoryVerticalCapacity);
+	
 }
 
 void UInventoryComponent::AddItem(APickUpActor* NewItem)
 {
-    if (Inventory.Num() < GetMaxInventoryCapacity())
+    if (Inventory.Num() < InventoryCapacity.GetStorageSize())
     {
-		Inventory.Add(NewItem);
-
-        if (StorageWidgetRef)
-			StorageWidgetRef->InitializeWidget(Inventory, InventoryHorizontalCapacity, InventoryVerticalCapacity);            
-        
-		NewItem->HideInWorld();
+		Inventory.Add(NewItem);        
+		NewItem->HideInWorld(); 
+		
     }
     else
     {

@@ -19,7 +19,7 @@ class SUR_API UBaseCellUserWidget : public UUserWidget
 
 public:
 
-	void InitializeWidget(IUsableInterface* InInterface, UStorageWidget* InParentWidget);
+	virtual void InitializeWidget(IUsableInterface* InInterface, UStorageWidget* InParentWidget);
 
 protected:
 

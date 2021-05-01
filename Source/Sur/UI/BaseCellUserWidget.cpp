@@ -21,7 +21,7 @@ void UBaseCellUserWidget::OnSelect()
 {
     if (ParentWidget)
     {
-		ParentWidget->OnItemSelected(ItemInterface);
+        ParentWidget->OnItemSelected(ItemInterface);
     }
 }
 

@@ -27,9 +27,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UUsableDataAsset* UsableDataAsset;	
 
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UBaseCellUserWidget> CellClass;
-
 	UPROPERTY(EditAnywhere)
 	float DistanceToDrop = 50.f;
 
@@ -45,8 +42,6 @@ public:
 
 	virtual AActor* GetOwningActor() override { return this; }
 
-	virtual void OnBecameActive() override;
-    
 	virtual void OnStoppedActive() override { Super::OnStoppedActive(); };
 
 	virtual void OnInteraction() override;
@@ -57,8 +52,6 @@ public:
 	//IUsableInterface interface
 
 	virtual UDataAssetForStorage* GetUsableDataAsset() override { return StorageDataAsset; }
-
-	virtual TSubclassOf<UBaseCellUserWidget> GetStorageCellSubclass() override { return CellClass; }
 
 	virtual void OnUse() override;
 

@@ -7,7 +7,6 @@
 #include "UsableInterface.generated.h"
 
 class UDataAssetForStorage;
-class UBaseCellUserWidget;
 
 UINTERFACE(MinimalAPI)
 class UUsableInterface : public UInterface
@@ -25,8 +24,6 @@ class SUR_API IUsableInterface
 public:
 
 	virtual UDataAssetForStorage* GetUsableDataAsset() { return nullptr; }
-
-	virtual TSubclassOf<UBaseCellUserWidget> GetStorageCellSubclass() { return NULL; } 
 
 	virtual void OnUse() {}
 

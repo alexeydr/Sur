@@ -79,15 +79,23 @@ void ULifeStatsComponent::OnSubstractLifeStats()
 	CheckValueOnAdditionalStat();
 	CheckValueOnMainStat();
 
+	UpdateWidget();
+}
+void ULifeStatsComponent::UpdateWidget()
+{
 	if (LifeStatWidgetRef)
 	{
 		LifeStatWidgetRef->UpdateWidget(EStat::Hunger, *PlayerStat.GetStat(EStat::Hunger));
 		LifeStatWidgetRef->UpdateWidget(EStat::Thrust, *PlayerStat.GetStat(EStat::Thrust));
 		LifeStatWidgetRef->UpdateWidget(EStat::Health, *PlayerStat.GetStat(EStat::Health));
 	}
-	
-}
 
+}
+void ULifeStatsComponent::AddStats(FLifeStats DeltaStats)
+{
+	PlayerStat += DeltaStats;
+	UpdateWidget();
+}
 // Called every frame
 void ULifeStatsComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {

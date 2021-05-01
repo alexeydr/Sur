@@ -2,7 +2,9 @@
 #include "Sur/Interaction Actors/PickUpActor.h"
 #include "Sur/UI/InteractionWidget.h"
 #include "Sur/SurCharacter.h"
-#include "Sur/Components/InventoryComponent.h"
+#include "Sur/Data Assets/UsableDataAsset.h"
+#include "Sur/Components/LifeStatsComponent.h"
+#include "Sur/Components/CharacterInventoryComponent.h"
 #include "Camera/CameraComponent.h"
 
 void APickUpActor::BeginPlay()
@@ -27,24 +29,28 @@ void APickUpActor::ShowInWorld()
 	MeshComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 }
 
-void APickUpActor::OnBecameActive()
-{
-	Super::OnBecameActive();
-	InteractWidget->SetTextOnWidget("pick up");
-}
-
 void APickUpActor::OnInteraction()
 {
-	SurChar->GetInventoryComponent()->AddItem(this);
+	if (SurChar->GetInventoryComponent())
+	{
+		SurChar->GetInventoryComponent()->AddItem(this);
+	}
 }
 
 void APickUpActor::OnUse()
 {
-	SurChar->GetInventoryComponent()->RemoveItemFromInventory(this);
+	if (UsableDataAsset && SurChar->GetLifeStatsComponent() && SurChar->GetInventoryComponent())
+	{
+		SurChar->GetLifeStatsComponent()->AddStats(UsableDataAsset->GetDeltaEffect());
+		SurChar->GetInventoryComponent()->RemoveItemFromInventory(this);
+	}
 }
 
 void APickUpActor::OnDrop()
 {
-	ShowInWorld();
-	SurChar->GetInventoryComponent()->RemoveItemFromInventory(this);
+	if (SurChar->GetInventoryComponent())
+	{
+		ShowInWorld();
+		SurChar->GetInventoryComponent()->RemoveItemFromInventory(this);
+	}
 }

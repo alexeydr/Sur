@@ -2,49 +2,58 @@
 #include "Sur/UI/Inventory/StorageWidget.h"
 #include "Components/GridPanel.h"
 #include "Components/SizeBox.h"
+#include "Sur/Components/InventoryComponent.h"
 #include "Sur/UI/BaseCellUserWidget.h"
 #include "Sur/Interfaces/UsableInterface.h"
 #include "Sur/UI/ItemViewWindow.h"
+#include "Sur/SurTypes.h"
 #include "Components/GridSlot.h"
 
-
-void UStorageWidget::InitializeWidget(TArray<IUsableInterface*> InInventory, int HorizontalGrid, int VerticalGrid)
+void UStorageWidget::AddToAdditionalWindow(UWidget* Content)
 {
-	StorageGrid->ClearChildren();
+	AdditionalBox->ClearChildren();
+	AdditionalBox->AddChild(Content);
+}
+
+void UStorageWidget::AddToMainWindow(UWidget* Content)
+{
+	MainBox->ClearChildren();
+	MainBox->AddChild(Content);
+}
+
+UPanelWidget* UStorageWidget::FormBoxWithCells(UInventoryComponent* SourceComponent)
+{
+	UGridPanel* StorageGrid = NewObject<UGridPanel>();
+	const auto& Inventory = SourceComponent->GetInventory();
+	const auto& Capacity = SourceComponent->GetInventoryCapacity();
 	int Iter = 0;
-	for (int Column = 0; Column < VerticalGrid; Column++)
+	for (int Column = 0; Column < Capacity.VerticalCapacity; Column++)
 	{
 		StorageGrid->SetColumnFill(Column, 1.f);
-		for (int Row = 0; Row < HorizontalGrid; Row++)
+		for (int Row = 0; Row < Capacity.HorizontalCapacity; Row++)
 		{
 			StorageGrid->SetRowFill(Row, 1.f);
 
-		    UBaseCellUserWidget* CellWidgetRef = nullptr;
-			UUserWidget* CellBase = nullptr;
-            if (InInventory.Num() - 1 >= Iter)
-            {
-				CellWidgetRef = CreateWidget<UBaseCellUserWidget>(this, InInventory[Iter]->GetStorageCellSubclass());
-				CellWidgetRef->InitializeWidget(InInventory[Iter],this);
-            }
-            else
-            {
-				CellBase = CreateWidget<UUserWidget>(this, BaseCellClass);
-            }
+			if (Inventory.Num() - 1 >= Iter)
+			{
+				UBaseCellUserWidget* CellWidgetRef = CreateWidget<UBaseCellUserWidget>(this, SourceComponent->StorageCellClass);
+				CellWidgetRef->InitializeWidget(Inventory[Iter], this);
+				StorageGrid->AddChildToGrid(CellWidgetRef, Row, Column)->SetPadding(FMargin(10.f));
+			}
+			else
+			{
+				UUserWidget* CellBase = CreateWidget<UUserWidget>(this, BaseCellClass);
+				StorageGrid->AddChildToGrid(CellBase, Row, Column)->SetPadding(FMargin(10.f));
+			}
 
 			Iter++;
-			StorageGrid->AddChildToGrid(IsValid(CellWidgetRef) ? CellWidgetRef : CellBase, Row, Column)->SetPadding(FMargin(10.f));
-		
 		}
 	}
+	OwnerComponent = SourceComponent;
+	return StorageGrid;
 }
 
 void UStorageWidget::OnItemSelected(IUsableInterface* InInterface)
 {
-    if (ViewPanelBox && ViewPanelWidgetClass)
-    {
-		ViewPanelBox->ClearChildren();
-		UItemViewWindow* ViewPanelRef = CreateWidget<UItemViewWindow>(this, ViewPanelWidgetClass);
-		ViewPanelRef->InitializeWidget(InInterface);
-		ViewPanelBox->AddChild(ViewPanelRef);
-    }
+	OwnerComponent->OnSelectItem(InInterface);
 }

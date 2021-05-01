@@ -44,8 +44,9 @@ void ABaseInteractionActor::Tick(float DeltaTime)
 
 void ABaseInteractionActor::OnBecameActive()
 {
-    if (WidgetComponent)
+    if (WidgetComponent && InteractWidget)
     {
+		InteractWidget->SetTextOnWidget(TextOnInteractionWidget);
 		WidgetComponent->SetVisibility(true);
     }
 }

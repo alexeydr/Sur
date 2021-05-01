@@ -39,6 +39,9 @@ protected:
 	UPROPERTY(Transient)
 	UInteractionWidget* InteractWidget;
 
+	UPROPERTY(EditAnywhere)
+	FString TextOnInteractionWidget;
+
 public:
 
 	virtual void Tick(float DeltaTime) override;
