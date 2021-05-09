@@ -7,24 +7,26 @@
 #include "Components/PanelWidget.h"
 #include "Sur/Interfaces/UsableInterface.h"
 
-void UStorageInventoryComponent::OnSelectItem(IUsableInterface* SelectedItem)
+void UStorageInventoryComponent::RemoveItemFromInventory(APickUpActor* Item)
 {
-	APickUpActor* Item = Cast<APickUpActor>(SelectedItem);
-	UCharacterInventoryComponent* CharInv = Library::GetCharacterInventory(this);
-   if (Item && CharInv)
-    {
-        if (CharInv->GetInventory().Contains(Item))
-        {
-			AddItem(Item);
-			CharInv->RemoveItemFromInventory(Item);
-        }
-        else
-        {
-			RemoveItemFromInventory(Item);
-			CharInv->AddItem(Item);
-        }
-		StorageWidgetRef->AddToMainWindow(StorageWidgetRef->FormBoxWithCells(Library::GetCharacterInventory(this)));
+	Super::RemoveItemFromInventory(Item);
+	if (StorageWidgetRef)
 		StorageWidgetRef->AddToAdditionalWindow(StorageWidgetRef->FormBoxWithCells(this));
+}
+
+void UStorageInventoryComponent::AddItem(APickUpActor* NewItem)
+{
+	Super::AddItem(NewItem);
+	if (StorageWidgetRef)
+		StorageWidgetRef->AddToAdditionalWindow(StorageWidgetRef->FormBoxWithCells(this));
+}
+
+void UStorageInventoryComponent::OnSelectItem(IUsableInterface* SelectedItem)
+{	
+   if (APickUpActor* Item = Cast<APickUpActor>(SelectedItem))
+    {
+		Library::GetCharacterInventory(this)->AddItem(Item);
+		RemoveItemFromInventory(Item);
     }
    
 }

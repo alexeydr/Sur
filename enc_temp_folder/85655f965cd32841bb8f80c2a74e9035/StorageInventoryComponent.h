@@ -16,6 +16,10 @@ class SUR_API UStorageInventoryComponent : public UInventoryComponent
 
 public:
 
+	virtual void RemoveItemFromInventory(APickUpActor* Item) override;
+
+	virtual void AddItem(APickUpActor* NewItem) override;
+
 	virtual	void OnSelectItem(IUsableInterface* SelectedItem) override;
 
 	virtual void CreateWidgetInventory() override;
