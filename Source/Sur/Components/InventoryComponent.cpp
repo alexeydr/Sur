@@ -39,7 +39,6 @@ void UInventoryComponent::CreateWidgetInventory()
 void UInventoryComponent::RemoveItemFromInventory(APickUpActor* Item)
 {
 	Inventory.Remove(Item);
-	
 }
 
 void UInventoryComponent::AddItem(APickUpActor* NewItem)

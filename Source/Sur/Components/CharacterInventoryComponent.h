@@ -17,11 +17,11 @@ class SUR_API UCharacterInventoryComponent : public UInventoryComponent
 
 public:
 
-	virtual void RemoveItemFromInventory(APickUpActor* Item);
+	virtual void RemoveItemFromInventory(APickUpActor* Item) override;
 
-	virtual void AddItem(APickUpActor* NewItem);
+	virtual void AddItem(APickUpActor* NewItem) override;
 
-	virtual	void OnSelectItem(IUsableInterface* SelectedItem);
+	virtual	void OnSelectItem(IUsableInterface* SelectedItem) override;
 
 	virtual void CreateWidgetInventory() override;
 
