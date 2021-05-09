@@ -55,9 +55,6 @@ protected:
 
 	void Interaction();
 
-    UFUNCTION()
-	void OnInteractTimerCompleted(TScriptInterface<IInteractionInterface> InInteractActor);
-
 	void UseInventory();
 
 protected:

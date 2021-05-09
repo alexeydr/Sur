@@ -4,12 +4,19 @@
 #include "Sur/SurCharacter.h"
 #include "Sur/Data Assets/UsableDataAsset.h"
 #include "Sur/Components/LifeStatsComponent.h"
+#include "Sur/Components/WaitingComponent.h"
 #include "Sur/Components/CharacterInventoryComponent.h"
 #include "Camera/CameraComponent.h"
+
+APickUpActor::APickUpActor()
+{
+	WaitingComp = CreateDefaultSubobject<UWaitingComponent>(TEXT("WaitingComp"));
+}
 
 void APickUpActor::BeginPlay()
 {
 	Super::BeginPlay();
+	WaitingComp->OnInteractionTimeComplete.AddDynamic(this, &APickUpActor::UseItem);
 }
 
 void APickUpActor::HideInWorld()
@@ -37,13 +44,26 @@ void APickUpActor::OnInteraction()
 	}
 }
 
-void APickUpActor::OnUse()
+void APickUpActor::UseItem()
 {
 	if (UsableDataAsset && SurChar->GetLifeStatsComponent() && SurChar->GetInventoryComponent())
 	{
 		SurChar->GetLifeStatsComponent()->AddStats(UsableDataAsset->GetDeltaEffect());
 		SurChar->GetInventoryComponent()->RemoveItemFromInventory(this);
 	}
+}
+
+float APickUpActor::GetUsingTime()
+{
+	return UsableDataAsset ? UsableDataAsset->UsingTime : 0.f;
+}
+
+void APickUpActor::OnUse()
+{
+	if (FMath::IsNearlyZero(GetUsingTime()))
+		UseItem();
+    else 
+		WaitingComp->ItemUsed(GetUsingTime());
 }
 
 void APickUpActor::OnDrop()

@@ -34,6 +34,10 @@ protected:
 
 public:
 
+	UWidget* GetWidgetFromAdditionalBox();
+
+	UWidget* GetWidgetFromMainBox();
+
 	void OnItemSelected(IUsableInterface* InInterface);
 
 	UPanelWidget* FormBoxWithCells(UInventoryComponent* SourceComponent);

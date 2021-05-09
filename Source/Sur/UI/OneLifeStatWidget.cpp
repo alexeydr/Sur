@@ -8,6 +8,6 @@
 void UOneLifeStatWidget::SetValueOnWidget(EStat Stat, float Value)
 {
 	ParamName->SetText(FText::FromString(Library::EnumToString(TEXT("EStat"),Stat)));
-	ValueInPercentage->SetText(FText::FromString(FString::SanitizeFloat(Value)));
+	ValueInPercentage->SetText(FText::FromString(FString::FromInt(Value)));
 	ValueInProgressBar->SetPercent(Value / 100.f);
 }

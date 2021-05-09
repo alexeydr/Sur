@@ -25,4 +25,7 @@ public:
 
 	FLifeStats GetDeltaEffect() { return PositiveEffect + NegativeEffect; }
 
+	UPROPERTY(EditAnywhere)
+	float UsingTime = 1.f;
+
 };

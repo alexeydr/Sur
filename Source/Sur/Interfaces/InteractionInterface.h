@@ -30,6 +30,4 @@ public:
 
 	virtual void OnInteraction() {}
 
-	virtual void OnStopInteraction() {}
-
 };

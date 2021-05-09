@@ -23,6 +23,8 @@ class SUR_API IUsableInterface
 
 public:
 
+	virtual float GetUsingTime() { return 0.f; }
+
 	virtual UDataAssetForStorage* GetUsableDataAsset() { return nullptr; }
 
 	virtual void OnUse() {}

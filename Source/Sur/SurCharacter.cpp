@@ -83,19 +83,7 @@ void ASurCharacter::Interaction()
 {
     if (IInteractionInterface* InteractActor = InteractionComp->GetActiveInteractActor())
     {
-		FTimerDelegate TimerDel;
-		FTimerHandle TimerHandle;
 		InteractActor->OnInteraction();
-		TimerDel.BindUFunction(this, FName("OnInteractTimerCompleted"), InteractActor);
-		GetWorldTimerManager().SetTimer(TimerHandle, TimerDel, InteractActor->GetInteractionTime(), false);
-    }
-}
-
-void ASurCharacter::OnInteractTimerCompleted(TScriptInterface<IInteractionInterface> InInteractActor)
-{
-    if (InInteractActor)
-    {
-		InInteractActor->OnStopInteraction();
     }
 }
 

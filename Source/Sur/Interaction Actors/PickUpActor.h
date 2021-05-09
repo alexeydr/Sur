@@ -9,6 +9,7 @@
 class UDataAssetForStorage;
 class UBaseCellUserWidget;
 class UUsableDataAsset;
+class UWaitingComponent;
 /**
  * 
  */
@@ -21,6 +22,9 @@ protected:
 
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly)
+	UWaitingComponent* WaitingComp;
+
 	UPROPERTY(EditAnywhere)
 	UDataAssetForStorage* StorageDataAsset;
 
@@ -30,7 +34,12 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float DistanceToDrop = 50.f;
 
+	UFUNCTION()
+	void UseItem();
+
 public:
+
+	APickUpActor();
 
 	void HideInWorld();
 
@@ -50,6 +59,8 @@ public:
 
 
 	//IUsableInterface interface
+
+	virtual float GetUsingTime() override;
 
 	virtual UDataAssetForStorage* GetUsableDataAsset() override { return StorageDataAsset; }
 
