@@ -4,14 +4,43 @@
 
 #include "CoreMinimal.h"
 #include "Sur/Interaction Actors/BaseStorageActor.h"
+#include "Sur/Interfaces/UsableInterface.h"
 #include "CraftActor.generated.h"
 
+class UWaitingComponent;
 /**
  * 
  */
 UCLASS()
-class SUR_API ACraftActor : public ABaseStorageActor
+class SUR_API ACraftActor : public ABaseStorageActor, public IUsableInterface
 {
 	GENERATED_BODY()
+
+public:
+
+	ACraftActor();
+
+protected:
+
+	UPROPERTY(EditDefaultsOnly)
+	UWaitingComponent* WaitingComp;
+
+    virtual void BeginPlay() override;
+
+public:
+
+	//IInteractionInterface interface
+
+	virtual void OnInteraction() override;
+
+	//End of IInteractionInterface interface
+	
+    //IUsableInterface interface
+
+	virtual void OnUse() override;
+
+	virtual void OnDrop() override;
+
+	//End of IUsableInterface interface
 	
 };
