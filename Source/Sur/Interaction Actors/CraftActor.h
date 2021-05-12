@@ -8,6 +8,8 @@
 #include "CraftActor.generated.h"
 
 class UWaitingComponent;
+class APickUpActor;
+class UCraftDataAsset;
 /**
  * 
  */
@@ -21,11 +23,17 @@ public:
 	ACraftActor();
 
 protected:
+	
+	UPROPERTY(EditDefaultsOnly)
+	UCraftDataAsset* CraftDataAsset;
 
 	UPROPERTY(EditDefaultsOnly)
 	UWaitingComponent* WaitingComp;
 
     virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void OnPlayerAddItem(APickUpActor* ItemForAdd);
 
 public:
 

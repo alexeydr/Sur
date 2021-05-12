@@ -15,6 +15,9 @@ void UStorageInventoryComponent::OnSelectItem(IUsableInterface* SelectedItem)
     {
         if (CharInv->GetInventory().Contains(Item))
         {
+			if (OnItemAddToStorage.IsBound())
+				OnItemAddToStorage.Broadcast(Item);
+
 			AddItem(Item);
 			CharInv->RemoveItemFromInventory(Item);
         }

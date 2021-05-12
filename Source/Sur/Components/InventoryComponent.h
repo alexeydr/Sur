@@ -33,6 +33,8 @@ public:
 
 	const FStorageSize& GetInventoryCapacity() { return InventoryCapacity; }
 
+	UStorageWidget* GetStorageWidget() { return StorageWidgetRef; }
+
 protected:
 
 	virtual void BeginPlay() override;
