@@ -7,12 +7,14 @@
 #include "Sur/Interfaces/UsableInterface.h"
 #include "CraftActor.generated.h"
 
+struct FRecipe;
 class UWaitingComponent;
 class APickUpActor;
 class UCraftDataAsset;
-/**
- * 
- */
+class UUserWidget;
+class UInventoryComponent;
+class UCraftWidget;
+
 UCLASS()
 class SUR_API ACraftActor : public ABaseStorageActor, public IUsableInterface
 {
@@ -33,9 +35,16 @@ protected:
     virtual void BeginPlay() override;
 
 	UFUNCTION()
-	void OnPlayerAddItem(APickUpActor* ItemForAdd);
+	void OnItemCrated();
+
+    UPROPERTY()
+	TArray<TSubclassOf<APickUpActor>> ResultCraft;
 
 public:
+
+	void OnPlayerStartCraft(FRecipe* ExpectedResult);
+
+	UCraftDataAsset* GetCraftDA() const { return CraftDataAsset; }
 
 	//IInteractionInterface interface
 
@@ -45,9 +54,9 @@ public:
 	
     //IUsableInterface interface
 
-	virtual void OnUse() override;
+	virtual void OnUse() override {};
 
-	virtual void OnDrop() override;
+	virtual void OnDrop() override {};
 
 	//End of IUsableInterface interface
 	

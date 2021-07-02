@@ -22,7 +22,7 @@ void UInventoryComponent::CreateWidgetInventory()
 {   
 	if (!bIsOpenned)
 	{
-		StorageWidgetRef = CreateWidget<UStorageWidget>(UGameplayStatics::GetGameInstance(GetWorld()), InventoryWidgetClass);
+		StorageWidgetRef = CreateWidget<UStorageWidget>(GetWorld(), InventoryWidgetClass);
 		if (StorageWidgetRef)
 		{
 			bIsOpenned = true;
@@ -38,14 +38,24 @@ void UInventoryComponent::CreateWidgetInventory()
 
 void UInventoryComponent::RemoveItemFromInventory(APickUpActor* Item)
 {
-	Inventory.Remove(Item);
+    if (Inventory.Contains(Item))
+    {
+		Inventory.Remove(Item);
+
+		if (OnItemRemoveFromStorage.IsBound())
+			OnItemRemoveFromStorage.Broadcast(Item, this);
+    }
 }
 
 void UInventoryComponent::AddItem(APickUpActor* NewItem)
 {
     if (Inventory.Num() < InventoryCapacity.GetStorageSize())
     {
-		Inventory.Add(NewItem);        
+		Inventory.Add(NewItem);
+
+		if (OnItemAddToStorage.IsBound())
+			OnItemAddToStorage.Broadcast(NewItem, this);
+      
 		NewItem->HideInWorld(); 
 		
     }
@@ -53,6 +63,11 @@ void UInventoryComponent::AddItem(APickUpActor* NewItem)
     {
 		UE_LOG(LogTemp, Error, TEXT("Inventory is full"));
     }
+}
+
+void UInventoryComponent::ClearInventory()
+{
+
 }
 
 // Called when the game starts

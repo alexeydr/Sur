@@ -39,7 +39,7 @@ void UWaitingComponent::ItemUsed(float UseTime)
 {
     if (WaitingWidgetClass && !GetWorld()->GetTimerManager().IsTimerActive(CurrentTH))
     {
-		UWaitingForCompleteWidget* WaitingWidget = CreateWidget<UWaitingForCompleteWidget>(UGameplayStatics::GetGameInstance(GetWorld()), WaitingWidgetClass);
+		UWaitingForCompleteWidget* WaitingWidget = CreateWidget<UWaitingForCompleteWidget>(GetWorld(), WaitingWidgetClass);
 		GetWorld()->GetTimerManager().SetTimer(CurrentTH, this, &UWaitingComponent::OnTimerComplete, UseTime, false);
         if (WaitingWidget)
         {

@@ -33,7 +33,7 @@ void UCharacterInventoryComponent::OnSelectItem(IUsableInterface* SelectedItem)
 {
 	if (StorageWidgetRef && ViewPanelWidgetClass)
 	{
-		UItemViewWindow* ViewWindow = CreateWidget<UItemViewWindow>(UGameplayStatics::GetGameInstance(GetWorld()), ViewPanelWidgetClass);
+		UItemViewWindow* ViewWindow = CreateWidget<UItemViewWindow>(GetWorld(), ViewPanelWidgetClass);
 		ViewWindow->InitializeWidget(SelectedItem);
 		if (ViewWindow)
 		{

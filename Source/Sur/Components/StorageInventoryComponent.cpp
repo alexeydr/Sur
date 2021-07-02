@@ -7,6 +7,12 @@
 #include "Components/PanelWidget.h"
 #include "Sur/Interfaces/UsableInterface.h"
 
+void UStorageInventoryComponent::AddItem(APickUpActor* NewItem)
+{
+	Super::AddItem(NewItem);
+	StorageWidgetRef->AddToMainWindow(StorageWidgetRef->FormBoxWithCells(this));
+}
+
 void UStorageInventoryComponent::OnSelectItem(IUsableInterface* SelectedItem)
 {
 	APickUpActor* Item = Cast<APickUpActor>(SelectedItem);
@@ -15,9 +21,6 @@ void UStorageInventoryComponent::OnSelectItem(IUsableInterface* SelectedItem)
     {
         if (CharInv->GetInventory().Contains(Item))
         {
-			if (OnItemAddToStorage.IsBound())
-				OnItemAddToStorage.Broadcast(Item);
-
 			AddItem(Item);
 			CharInv->RemoveItemFromInventory(Item);
         }

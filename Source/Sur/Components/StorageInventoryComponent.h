@@ -10,7 +10,6 @@
  */
 class APickUpActor;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemAddToStorage, APickUpActor*, InActor);
 
 UCLASS()
 class SUR_API UStorageInventoryComponent : public UInventoryComponent
@@ -19,7 +18,7 @@ class SUR_API UStorageInventoryComponent : public UInventoryComponent
 
 public:
 
-	FOnItemAddToStorage OnItemAddToStorage;
+	virtual void AddItem(APickUpActor* NewItem) override;
 
 	virtual	void OnSelectItem(IUsableInterface* SelectedItem) override;
 

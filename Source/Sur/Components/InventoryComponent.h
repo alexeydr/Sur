@@ -11,6 +11,10 @@ class APickUpActor;
 class UStorageWidget;
 class IUsableInterface;
 class UBaseCellUserWidget;
+class UInventoryComponent;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemAddToStorage, APickUpActor*, InActor, UInventoryComponent*, InventoryToAdd);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemRemoveFromStorage, APickUpActor*, InActor, UInventoryComponent*, InventoryFromRemove);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUR_API UInventoryComponent : public UActorComponent
@@ -29,11 +33,17 @@ public:
 
 	virtual void AddItem(APickUpActor* NewItem);
 
-	const TArray<IUsableInterface*>& GetInventory() { return Inventory; }
+	void ClearInventory();
+
+	TArray<IUsableInterface*>& GetInventory() { return Inventory; }
 
 	const FStorageSize& GetInventoryCapacity() { return InventoryCapacity; }
 
 	UStorageWidget* GetStorageWidget() { return StorageWidgetRef; }
+
+	FOnItemAddToStorage OnItemAddToStorage;
+
+	FOnItemRemoveFromStorage OnItemRemoveFromStorage;
 
 protected:
 

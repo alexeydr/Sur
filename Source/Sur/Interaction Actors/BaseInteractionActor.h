@@ -44,6 +44,8 @@ protected:
 
 public:
 
+	UStaticMeshComponent* GetMesh() { return MeshComponent; };
+
 	virtual void Tick(float DeltaTime) override;
 
 	//IInteractionInterface interface

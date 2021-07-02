@@ -26,7 +26,7 @@ void ULifeStatsComponent::BeginPlay()
 
 	if (LifeStatWidgetClass)
 	{
-		LifeStatWidgetRef = CreateWidget<ULifeStatsWidget>(UGameplayStatics::GetGameInstance(GetWorld()), LifeStatWidgetClass);
+		LifeStatWidgetRef = CreateWidget<ULifeStatsWidget>(GetWorld(), LifeStatWidgetClass);
 		LifeStatWidgetRef->CreateStatRow(EStat::Health, *PlayerStat.GetStat(EStat::Health)); 
 		LifeStatWidgetRef->CreateStatRow(EStat::Hunger, *PlayerStat.GetStat(EStat::Hunger));
 		LifeStatWidgetRef->CreateStatRow(EStat::Thrust, *PlayerStat.GetStat(EStat::Thrust));

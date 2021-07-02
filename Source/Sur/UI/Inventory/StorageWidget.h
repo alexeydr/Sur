@@ -10,6 +10,7 @@ class UBaseCellUserWidget;
 class UItemViewWindow;
 class UInventoryComponent;
 class IUsableInterface;
+class APickUpActor;
 /**
  * 
  */
@@ -34,15 +35,12 @@ protected:
 
 public:
 
-	UWidget* GetWidgetFromAdditionalBox();
-
-	UWidget* GetWidgetFromMainBox();
-
-	void OnItemSelected(IUsableInterface* InInterface);
+	virtual void OnItemSelected(IUsableInterface* InInterface);
 
 	UPanelWidget* FormBoxWithCells(UInventoryComponent* SourceComponent);
 
 	void AddToAdditionalWindow(UWidget* Content);
 
 	void AddToMainWindow(UWidget* Content);
+
 };

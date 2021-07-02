@@ -53,16 +53,6 @@ UPanelWidget* UStorageWidget::FormBoxWithCells(UInventoryComponent* SourceCompon
 	return StorageGrid;
 }
 
-UWidget* UStorageWidget::GetWidgetFromAdditionalBox()
-{
-	return AdditionalBox->GetChildAt(0);
-}
-
-UWidget* UStorageWidget::GetWidgetFromMainBox()
-{
-	return MainBox->GetChildAt(0);
-}
-
 void UStorageWidget::OnItemSelected(IUsableInterface* InInterface)
 {
 	OwnerComponent->OnSelectItem(InInterface);

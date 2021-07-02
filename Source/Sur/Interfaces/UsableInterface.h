@@ -22,7 +22,7 @@ class SUR_API IUsableInterface
 	GENERATED_BODY()
 
 public:
-
+    
 	virtual float GetUsingTime() { return 0.f; }
 
 	virtual UDataAssetForStorage* GetUsableDataAsset() { return nullptr; }

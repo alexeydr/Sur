@@ -3,7 +3,10 @@
 #include "Sur/Components/WaitingComponent.h"
 #include "Sur/Components/StorageInventoryComponent.h"
 #include "Sur/UI/Inventory/StorageWidget.h"
-#include "Components/VerticalBox.h"
+#include "Sur/Interaction Actors/PickUpActor.h"
+#include "Sur/Components/InventoryComponent.h"
+#include "Sur/UI/Craft/CraftWidget.h"
+#include "Blueprint/UserWidget.h"
 
 ACraftActor::ACraftActor()
 {
@@ -13,31 +16,38 @@ ACraftActor::ACraftActor()
 void ACraftActor::BeginPlay()
 {
 	Super::BeginPlay();
-	InventoryComp->OnItemAddToStorage.AddDynamic(this, &ACraftActor::OnPlayerAddItem);
-	//WaitingComp->OnInteractionTimeComplete.AddDynamic(this, &APickUpActor::UseItem);
+	WaitingComp->OnInteractionTimeComplete.AddDynamic(this, &ACraftActor::OnItemCrated);
 }
 
-void ACraftActor::OnPlayerAddItem(APickUpActor* ItemForAdd)
+void ACraftActor::OnItemCrated()
 {
+	for (auto Temp : ResultCraft)
+	{
+		APickUpActor* Act = GetWorld()->SpawnActor<APickUpActor>(Temp, GetActorLocation() + FVector(0, 0, 500), FRotator());
+		Act->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	}
+}
 
+void ACraftActor::OnPlayerStartCraft(FRecipe* ExpectedResult)
+{
+    if (ExpectedResult)
+    {
+		InventoryComp->ClearInventory();
+		WaitingComp->ItemUsed(ExpectedResult->CraftTime);
+		ResultCraft = ExpectedResult->Result;
+    }
 }
 
 void ACraftActor::OnInteraction()
 {	
 	Super::OnInteraction();
-	if (InventoryComp->GetStorageWidget())
-	{
-		UStorageWidget* StorageWidgetRef = InventoryComp->GetStorageWidget();
-		UVerticalBox* MainContainer = NewObject<UVerticalBox>();
-	}
-}
 
-void ACraftActor::OnUse()
-{
+	UCraftWidget* CraftWidgetRef = Cast<UCraftWidget>(InventoryComp->GetStorageWidget());
+    if (CraftWidgetRef)
+    {
+		CraftWidgetRef->InitializeWidget(this);
+    }
+		
 	
 }
 
-void ACraftActor::OnDrop()
-{
-
-}

@@ -23,12 +23,6 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	UStorageInventoryComponent* InventoryComp;
 
-	UPROPERTY(EditAnywhere)
-	int HorizontalCapacity;
-
-	UPROPERTY(EditAnywhere)
-	int VerticalCapacity;
-
 	//IInteractionInterface interface
 
 	virtual void OnInteraction() override;
